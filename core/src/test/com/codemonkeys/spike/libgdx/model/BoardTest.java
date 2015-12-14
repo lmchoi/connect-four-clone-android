@@ -17,6 +17,11 @@ public class BoardTest {
     }
 
     @Test
+    public void shouldNotContainTokenWhenNoneIsAdded() throws Exception {
+        assertThat(board.containsToken(0, 0), is(false));
+    }
+
+    @Test
     public void shouldBeAbleToHoldToken() throws Exception {
         board.add(0, Board.YELLOW);
 
