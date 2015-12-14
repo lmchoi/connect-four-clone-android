@@ -7,6 +7,7 @@ public class Board {
     private final int numOfRows;
     public static final int EMPTY = 0;
     public static final int YELLOW = 1;
+    public static final int RED = 2;
     private int[][] grid;
 
     public Board(int numOfColumns, int numOfRows) {
@@ -21,8 +22,8 @@ public class Board {
             grid[column][row] = player;
     }
 
-    public boolean containsToken(int column, int row) {
-        return grid[column][row] != EMPTY;
+    public boolean containsToken(int column, int row, int player) {
+        return grid[column][row] == player;
     }
 
     private int getNumOfTokensInColumn(int column) {
