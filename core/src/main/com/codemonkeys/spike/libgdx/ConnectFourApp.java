@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class ConnectFourApp extends ApplicationAdapter {
     // TODO-MC make this configurable based on board size
@@ -31,6 +32,7 @@ public class ConnectFourApp extends ApplicationAdapter {
     // this is only used locally to transform the input position,
     // but to prevent GC, just create it once here
     private final Vector3 touchPosition = new Vector3();
+    private ExtendViewport viewport;
 
     @Override
 	public void create () {
@@ -47,7 +49,10 @@ public class ConnectFourApp extends ApplicationAdapter {
 
         emptySlotTxRegion = new TextureRegion(sprite, 128, 0, 64, 64);
 
-        camera = new OrthographicCamera(APP_WIDTH, APP_HEIGHT);
+        camera = new OrthographicCamera();
+        viewport = new ExtendViewport(APP_WIDTH, APP_HEIGHT, camera);
+        viewport.apply();
+
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
 
@@ -78,9 +83,10 @@ public class ConnectFourApp extends ApplicationAdapter {
     }
 
     @Override public void resize (int width, int height) {
-        camera.viewportWidth = APP_WIDTH;
-        camera.viewportHeight = APP_HEIGHT; // should probably multiply by height/width
-        camera.update();
+        viewport.update(width, height);
+
+        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+
     }
 
     @Override public void dispose () {
