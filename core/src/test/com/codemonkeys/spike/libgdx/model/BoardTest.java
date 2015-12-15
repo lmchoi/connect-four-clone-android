@@ -2,18 +2,38 @@ package com.codemonkeys.spike.libgdx.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@RunWith(value = Parameterized.class)
 public class BoardTest {
 
     private Board board;
 
+    public BoardTest(Board board) {
+        this.board = board;
+    }
+
+    @Parameterized.Parameters
+    public static Collection data() {
+        Object[][] data = new Object[][] {
+            { new Connect4IntArrayBoard(7, 6) },
+            { new Connect4BitBoard(7, 6) }
+        };
+
+        return Arrays.asList(data);
+    }
+
     @Before
     public void setUp() throws Exception {
         // TODO-MC test for Board and Connect4BitBoard, extract common interface
-        board = new Board(7, 6);
+        board = new Connect4IntArrayBoard(7, 6);
     }
 
     @Test
@@ -44,7 +64,7 @@ public class BoardTest {
 
     @Test (expected = InvalidMoveException.class)
     public void shouldBeAbleToCheckIfColumnIsFull() throws Exception {
-        board = new Board(2, 2);
+        board = new Connect4IntArrayBoard(2, 2);
         board.add(0, Board.RED);
         board.add(0, Board.RED);
         board.add(0, Board.RED);
