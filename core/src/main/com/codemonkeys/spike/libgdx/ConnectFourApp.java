@@ -7,17 +7,26 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 public class ConnectFourApp extends ApplicationAdapter {
     // TODO-MC make this configurable based on board size
-    private static final int APP_WIDTH = 9; // 7 columns with 1 padding on both side
-    private static final int APP_HEIGHT = 8; // 6 rows with 1 padding above and below
+    private static final int NUM_OF_COLUMNS = 7;
+    private static final int NUM_OF_ROWS = 6;
+
+    // TODO make this configurable
+    private static final int PADDING = 1;
+
+    private static final int APP_WIDTH = NUM_OF_COLUMNS + 2 * PADDING; // 7 columns with 1 PADDING on both side
+    private static final int APP_HEIGHT = NUM_OF_ROWS + 2 * PADDING; // 6 rows with 1 PADDING above and below
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
-	private Texture img;
-    private Sprite lolSprite;
+	private Texture sprite;
+    private Sprite redSprite;
+    private Sprite yellowSprite;
+    private TextureRegion emptySlotTxRegion;
 
     // this is only used locally to transform the input position,
     // but to prevent GC, just create it once here
@@ -26,10 +35,17 @@ public class ConnectFourApp extends ApplicationAdapter {
     @Override
 	public void create () {
         // Refer to: https://github.com/libgdx/libgdx/wiki/Orthographic-camera
-        img = new Texture("badlogic.jpg");
-        lolSprite = new Sprite(img);
-        lolSprite.setPosition(1, 7);
-        lolSprite.setSize(1, 1);
+        sprite = new Texture("c4_sprite.png");
+
+        redSprite = new Sprite(sprite, 0, 0, 64, 64);
+        redSprite.setPosition(1, 7);
+        redSprite.setSize(1, 1);
+
+        yellowSprite = new Sprite(sprite, 64, 0, 64, 64);
+        yellowSprite.setPosition(7, 7);
+        yellowSprite.setSize(1, 1);
+
+        emptySlotTxRegion = new TextureRegion(sprite, 128, 0, 64, 64);
 
         camera = new OrthographicCamera(APP_WIDTH, APP_HEIGHT);
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
@@ -49,7 +65,15 @@ public class ConnectFourApp extends ApplicationAdapter {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        lolSprite.draw(batch);
+
+        for (int y = 0; y < NUM_OF_ROWS; y++) {
+            for (int x = 0; x < NUM_OF_COLUMNS; x++) {
+                batch.draw(emptySlotTxRegion, x + PADDING, y + PADDING, 1, 1);
+            }
+        }
+
+        redSprite.draw(batch);
+        yellowSprite.draw(batch);
         batch.end();
     }
 
@@ -60,14 +84,14 @@ public class ConnectFourApp extends ApplicationAdapter {
     }
 
     @Override public void dispose () {
-        img.dispose();
+        sprite.dispose();
         batch.dispose();
     }
 
     private void processInput() {
         if (Gdx.input.isTouched()) {
             updateTouchPosition();
-            lolSprite.setPosition((int)touchPosition.x, (int)touchPosition.y);
+            redSprite.setPosition((int) touchPosition.x, (int) touchPosition.y);
         }
     }
 
