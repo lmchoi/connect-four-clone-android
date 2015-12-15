@@ -1,7 +1,5 @@
 package com.codemonkeys.spike.libgdx.model;
 
-import java.util.Arrays;
-
 public class Board {
     private final int numOfColumns;
     private final int numOfRows;
@@ -27,7 +25,12 @@ public class Board {
     }
 
     private int getNumOfTokensInColumn(int column) {
-        return Arrays.stream(grid[column]).sum();
+        int count = 0;
+        for(int i : grid[column]) {
+            if (i != EMPTY) count++;
+        }
+
+        return count;
     }
 
     private boolean isValidMove(int column, int row) throws InvalidMoveException {
@@ -45,7 +48,7 @@ public class Board {
     }
 
     public boolean isWinner(int player) {
-
-        return true;
+        // TODO-MC implement win check
+        return (player == RED);
     }
 }
