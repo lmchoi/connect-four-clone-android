@@ -1,9 +1,6 @@
 package com.codemonkeys.spike.libgdx.model;
 
 public abstract class Board {
-    public static final int EMPTY = 0;
-    public static final int YELLOW = 1;
-    public static final int RED = 2;
     protected final int numOfColumns;
     protected final int numOfRows;
 
@@ -12,11 +9,11 @@ public abstract class Board {
         this.numOfRows = numOfRows;
     }
 
-    abstract void add(int column, int player) throws InvalidMoveException;
+    abstract void add(int column, Token token) throws InvalidMoveException;
 
-    abstract boolean containsToken(int column, int row, int player);
+    abstract boolean containsToken(int column, int row, Token token);
 
-    abstract boolean isWinner(int player);
+    abstract boolean isWinner(Token token);
 
     protected boolean isValidMove(int column, int row) throws InvalidMoveException {
         if (!isColumnAvailable(column)) throw new InvalidMoveException("Invalid column...");
@@ -31,4 +28,6 @@ public abstract class Board {
     private boolean isColumnAvailable(int column) {
         return column < numOfColumns;
     }
+
+    public abstract void reset();
 }

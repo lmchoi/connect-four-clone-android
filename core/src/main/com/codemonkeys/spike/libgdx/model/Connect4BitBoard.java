@@ -1,10 +1,12 @@
 package com.codemonkeys.spike.libgdx.model;
 
+import java.util.Arrays;
+
 public class Connect4BitBoard extends Board {
     private final int columnOffset;
     private final int backwardDiagonalOffset;
     private final byte height[]; // holds bit index of lowest free square
-    private long[] board;
+    private final long[] board;
 
     public Connect4BitBoard(int numOfColumns, int numOfRows) {
         super(numOfColumns, numOfRows);
@@ -13,31 +15,38 @@ public class Connect4BitBoard extends Board {
         this.columnOffset = numOfRows + 1;
         this.backwardDiagonalOffset = numOfRows + 2;
 
-        board = new long[2];
+        this.board = new long[2];
     }
 
     @Override
-    public void add(int column, int player) throws InvalidMoveException {
+    public void add(int column, Token token) throws InvalidMoveException {
         isValidMove(column, height[column]);
 
-        board[player - 1] = getBoard(player) ^ (1L << height[column]++) << (column * columnOffset);
+        board[getBoardId(token)] ^= (1L << height[column]++) << (column * columnOffset);
     }
 
     @Override
-    public boolean containsToken(int column, int row, int player) {
-        return (((1L << (column * columnOffset)) + row) & getBoard(player)) != 0;
+    public boolean containsToken(int column, int row, Token token) {
+        return (((1L << (column * columnOffset)) + row) & board[getBoardId(token)]) != 0;
     }
 
     @Override
-    public boolean isWinner(int player) {
-        if (forwardDiagonalWinCheck(getBoard(player))) return true;
-        else if (horizontalWinCheck(getBoard(player))) return true;
-        else if (backwardDiagonalWinCheck(getBoard(player))) return true;
-        return verticalWinCheck(getBoard(player));
+    public boolean isWinner(Token token) {
+        long board = this.board[getBoardId(token)];
+        if (forwardDiagonalWinCheck(board)) return true;
+        else if (horizontalWinCheck(board)) return true;
+        else if (backwardDiagonalWinCheck(board)) return true;
+        return verticalWinCheck(board);
     }
 
-    private long getBoard(int player) {
-        return board[player - 1];
+    @Override
+    public void reset() {
+        Arrays.fill(height, (byte) 0);
+        Arrays.fill(board, 0);
+    }
+
+    private int getBoardId(Token token) {
+        return token.ordinal();
     }
 
     private boolean forwardDiagonalWinCheck(long board) {
