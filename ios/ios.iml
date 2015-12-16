@@ -13,7 +13,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/build/classes/main" />
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
     <exclude-output />
@@ -34,6 +34,5 @@
     <orderEntry type="library" exported="" name="gdx-platform-1.7.0-natives-ios" level="project" />
     <orderEntry type="library" exported="" name="gdx-1.7.0" level="project" />
     <orderEntry type="library" exported="" name="robovm-objc-1.8.0" level="project" />
-    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
   </component>
 </module>
