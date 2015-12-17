@@ -59,7 +59,9 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
         androidTestCompile 'org.seleniumhq.selenium:selenium-remote-driver:2.44.0'
-        androidTestCompile 'org.testng:testng:6.9.9'
+        androidTestCompile ('org.testng:testng:6.9.9') {
+            exclude group: 'org.hamcrest'
+        }
     }
 }
 
@@ -100,7 +102,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
 
-        testCompile "junit:junit:4.12"
+        testCompile "junit:junit-dep:4.11"
         testCompile 'org.mockito:mockito-core:1.10.19'
     }
 }
