@@ -95,16 +95,16 @@ public class BoardTest {
 
     @Test
     public void shouldBeAbleToCheckForForwardDiagonalWin() throws Exception {
-        board.add(1, Token.RED);
-        board.add(1, Token.RED);
-        board.add(1, Token.RED);
+        board.add(1, Token.YELLOW);
+        board.add(1, Token.YELLOW);
+        board.add(1, Token.YELLOW);
         board.add(1, Token.RED);
 
-        board.add(2, Token.RED);
-        board.add(2, Token.RED);
+        board.add(2, Token.YELLOW);
+        board.add(2, Token.YELLOW);
         board.add(2, Token.RED);
 
-        board.add(3, Token.RED);
+        board.add(3, Token.YELLOW);
         board.add(3, Token.RED);
 
         board.add(4, Token.RED);
@@ -115,16 +115,16 @@ public class BoardTest {
 
     @Test
     public void shouldBeAbleToCheckForBackwardDiagonalWin() throws Exception {
-        board.add(4, Token.RED);
-        board.add(4, Token.RED);
-        board.add(4, Token.RED);
+        board.add(4, Token.YELLOW);
+        board.add(4, Token.YELLOW);
+        board.add(4, Token.YELLOW);
         board.add(4, Token.RED);
 
-        board.add(3, Token.RED);
-        board.add(3, Token.RED);
+        board.add(3, Token.YELLOW);
+        board.add(3, Token.YELLOW);
         board.add(3, Token.RED);
 
-        board.add(2, Token.RED);
+        board.add(2, Token.YELLOW);
         board.add(2, Token.RED);
 
         board.add(1, Token.RED);
